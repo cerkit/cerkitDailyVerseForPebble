@@ -17,37 +17,34 @@ var main = new UI.Card({
 
 main.show();
 
-function getVerse() {
+function getVerse(bookChapterVerse) {
   ajax(
   {
-    url: 'https://www.biblegateway.com/votd/get/?format=json',
+    url: 'http://labs.bible.org/api/?passage=votd&type=json',
     type: 'json'
   },
   function(data, status, request) {
-    getCleanVerse(data.votd.reference);
-  },
-  function(error, status, request) {
-    console.log('The ajax request failed: ' + error);
-  }
-);
-}
-
-// call another web service to get a non-HTML version, since the previous API uses HTML escape characters
-function getCleanVerse(bookChapterVerse) {
-  ajax(
-  {
-    url: 'http://labs.bible.org/api/?passage=' + bookChapterVerse + '&type=json',
-    type: 'json'
-  },
-  function(data, status, request) {
-    showVerse(bookChapterVerse, data[0].text);
+    showVerse(data);
   },
   function(error, status, request) {
     console.log('The ajax request failed: ' + error);
   });
 }
 
-function showVerse(bookChapterVerse, verse) {
+function showVerse(data) {
+  
+  // divide up the data into separate verses if necessary
+  var bookChapterVerse = data[0].bookname + ' ' + data[0].chapter + ':' + data[0].verse;
+  if(data.length > 1) {
+    bookChapterVerse += '-' + data[data.length -1].verse;
+  }
+  
+  var verseString = '';
+  
+  for(var i = 0; i < data.length; i++){
+    verseString += data[i].verse + ' ' + data[i].text + ' ';
+  }
+  
   var wind = new UI.Window({
     fullscreen: true,
   });
@@ -63,7 +60,7 @@ function showVerse(bookChapterVerse, verse) {
     position: new Vector2(0, 30),
     size: new Vector2(144, 100),
     font: 'gothic-14',
-    text: verse,
+    text: verseString,
     textAlign: 'left'
   });
   
