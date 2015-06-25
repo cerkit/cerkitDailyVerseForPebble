@@ -10,15 +10,40 @@ var main = new UI.Card({
   title: 'cerkit.com Daily Verse',
   icon: 'ICON_BIBLE',
   subtitle: 'NET Version',
-  body: 'Press any button.'
+  body: 'Press up or select for daily. Press down for random.'
 });
 
 main.show();
 
-function getVerse(bookChapterVerse) {
+var verseCard = function(bookChapterVerse, verseText) { 
+  var vCard = new UI.Card({
+    title: bookChapterVerse,
+    subtitle: '',
+    scrollable: true,
+    body: verseText
+  });
+  
+  vCard.show();
+};
+
+function getVerse() {
   ajax(
   {
-    url: 'http://labs.bible.org/api/?passage=votd&type=json',
+    url: 'http://labs.bible.org/api/?passage=votd&type=json&formatting=plain',
+    type: 'json'
+  },
+  function(data, status, request) {
+    showVerse(data);
+  },
+  function(error, status, request) {
+    console.log('The ajax request failed: ' + error);
+  });
+}
+
+function getRandomVerse() {
+  ajax(
+  {
+    url: 'http://labs.bible.org/api/?passage=random&type=json&formatting=plain',
     type: 'json'
   },
   function(data, status, request) {
@@ -43,6 +68,9 @@ function showVerse(data) {
     verseString += data[i].verse + ' ' + data[i].text + ' ';
   }
   
+  verseCard(bookChapterVerse, verseString);
+  
+  /*
   var wind = new UI.Window({
     fullscreen: true,
   });
@@ -55,10 +83,10 @@ function showVerse(data) {
   });
   
   var verseText = new UI.Text({
-    position: new Vector2(0, 30),
-    size: new Vector2(144, 100),
+    position: new Vector2(0, 25),
+    size: new Vector2(144, 160),
     font: 'gothic-14',
-    text: verseString,
+    text: verseString.replace('&#8211;','-'),
     textAlign: 'left'
   });
   
@@ -66,6 +94,20 @@ function showVerse(data) {
   wind.add(chapterVerseText);
   wind.add(verseText);
   wind.show();
+  
+  wind.on('click', 'select', function(e) {
+    getVerse();
+  });
+  
+  wind.on('click', 'up', function(e) {
+    getVerse();
+  });
+  
+  wind.on('click', 'down', function(e) {
+    getRandomVerse();
+  });
+ */
+  
 }
 
 main.on('click', 'select', function(e) {
@@ -77,5 +119,5 @@ main.on('click', 'up', function(e) {
 });
 
 main.on('click', 'down', function(e) {
-  getVerse();
+  getRandomVerse();
 });

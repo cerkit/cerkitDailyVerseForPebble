@@ -4,13 +4,12 @@
         ""
     ],
     "companyName": "mearls@hotmail.com",
-    "longName": "DailyBibleVerse",
+    "longName": "cerkit.com Daily Bible Verse",
     "projectType": "pebblejs",
     "resources": {
         "media": [
             {
                 "file": "images/menu_icon.png",
-                "menuIcon": true,
                 "name": "IMAGE_MENU_ICON",
                 "type": "png"
             },
@@ -31,6 +30,7 @@
             },
             {
                 "file": "images/BibleAppIcon.png",
+                "menuIcon": true,
                 "name": "IMAGES_BIBLEAPPICON_PNG",
                 "type": "png"
             },
@@ -45,7 +45,7 @@
     "shortName": "DailyBibleVerse",
     "uuid": "350920d1-878e-473c-84da-e03ecda6af46",
     "versionCode": 1,
-    "versionLabel": "1.0",
+    "versionLabel": "2.0",
     "watchapp": {
         "watchface": false
     }
