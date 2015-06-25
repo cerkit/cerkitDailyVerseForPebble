@@ -3,12 +3,14 @@
  *******************************/
 
 var UI = require('ui');
-var Vector2 = require('vector2');
+//var Vector2 = require('vector2');
 var ajax = require('ajax');
+var PASSAGE_TYPE_DAILY = 'votd';
+var PASSAGE_TYPE_RANDOM = 'random';
 
 var main = new UI.Card({
   title: 'cerkit.com Daily Verse',
-  icon: 'ICON_BIBLE',
+  icon: '',
   subtitle: 'NET Version',
   body: 'Press up or select for daily. Press down for random.'
 });
@@ -26,24 +28,10 @@ var verseCard = function(bookChapterVerse, verseText) {
   vCard.show();
 };
 
-function getVerse() {
+function getVerse(passage) {
   ajax(
   {
-    url: 'http://labs.bible.org/api/?passage=votd&type=json&formatting=plain',
-    type: 'json'
-  },
-  function(data, status, request) {
-    showVerse(data);
-  },
-  function(error, status, request) {
-    console.log('The ajax request failed: ' + error);
-  });
-}
-
-function getRandomVerse() {
-  ajax(
-  {
-    url: 'http://labs.bible.org/api/?passage=random&type=json&formatting=plain',
+    url: 'http://labs.bible.org/api/?passage=' + passage + '&type=json&formatting=plain',
     type: 'json'
   },
   function(data, status, request) {
@@ -70,54 +58,16 @@ function showVerse(data) {
   
   verseCard(bookChapterVerse, verseString);
   
-  /*
-  var wind = new UI.Window({
-    fullscreen: true,
-  });
-  var chapterVerseText = new UI.Text({
-    position: new Vector2(0, 0),
-    size: new Vector2(144, 30),
-    font: 'gothic-18-bold',
-    text: bookChapterVerse,
-    textAlign: 'center'
-  });
-  
-  var verseText = new UI.Text({
-    position: new Vector2(0, 25),
-    size: new Vector2(144, 160),
-    font: 'gothic-14',
-    text: verseString.replace('&#8211;','-'),
-    textAlign: 'left'
-  });
-  
-  
-  wind.add(chapterVerseText);
-  wind.add(verseText);
-  wind.show();
-  
-  wind.on('click', 'select', function(e) {
-    getVerse();
-  });
-  
-  wind.on('click', 'up', function(e) {
-    getVerse();
-  });
-  
-  wind.on('click', 'down', function(e) {
-    getRandomVerse();
-  });
- */
-  
 }
 
 main.on('click', 'select', function(e) {
-  getVerse();
+  getVerse(PASSAGE_TYPE_DAILY);
 });
 
 main.on('click', 'up', function(e) {
-  getVerse();
+  getVerse(PASSAGE_TYPE_DAILY);
 });
 
 main.on('click', 'down', function(e) {
-  getRandomVerse();
+  getVerse(PASSAGE_TYPE_RANDOM);
 });

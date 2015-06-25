@@ -45,7 +45,7 @@
     "shortName": "DailyBibleVerse",
     "uuid": "350920d1-878e-473c-84da-e03ecda6af46",
     "versionCode": 1,
-    "versionLabel": "2.0",
+    "versionLabel": "2.2",
     "watchapp": {
         "watchface": false
     }
