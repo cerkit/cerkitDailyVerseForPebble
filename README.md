@@ -1,4 +1,4 @@
-# pebbleDailyVerse
+# cerkit.com pebbleDailyVerse
 A daily verse for the Pebble smartwatch
 
 This is a simple app that displays a daily bible verse (New English Translation). It can also display a random verse. 
