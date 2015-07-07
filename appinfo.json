@@ -29,9 +29,9 @@
                 "type": "font"
             },
             {
-                "file": "images/BibleAppIcon.png",
+                "file": "images/watchIcon.png",
                 "menuIcon": true,
-                "name": "IMAGES_BIBLEAPPICON_PNG",
+                "name": "IMAGES_WATCHICON_PNG",
                 "type": "png"
             },
             {
@@ -42,10 +42,10 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "DailyBibleVerse",
+    "shortName": "Daily Bible Verse",
     "uuid": "350920d1-878e-473c-84da-e03ecda6af46",
     "versionCode": 1,
-    "versionLabel": "2.2",
+    "versionLabel": "2.5",
     "watchapp": {
         "watchface": false
     }

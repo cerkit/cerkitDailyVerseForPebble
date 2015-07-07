@@ -17,7 +17,15 @@ var main = new UI.Card({
 
 main.show();
 
-var verseCard = function(bookChapterVerse, verseText) { 
+function parseHtmlEntities(str) {
+    return str.replace(/&#([0-9]{1,4});/gi, function(match, numStr) {
+        var num = parseInt(numStr, 10); // read num as normal number
+        return String.fromCharCode(num);
+    });
+}
+
+
+function showVerseCard(bookChapterVerse, verseText) { 
   var vCard = new UI.Card({
     title: bookChapterVerse,
     subtitle: '',
@@ -26,9 +34,9 @@ var verseCard = function(bookChapterVerse, verseText) {
   });
   
   vCard.show();
-};
+}
 
-function getVerse(passage) {
+function getVerse(passage) {  
   ajax(
   {
     url: 'http://labs.bible.org/api/?passage=' + passage + '&type=json&formatting=plain',
@@ -55,13 +63,15 @@ function showVerse(data) {
   for(var i = 0; i < data.length; i++){
     verseString += data[i].verse + ' ' + data[i].text + ' ';
   }
-  
-  verseCard(bookChapterVerse, verseString);
+  //verseString = verseString.replace('&#8211;', '-');
+  verseString = parseHtmlEntities(verseString);
+  showVerseCard(bookChapterVerse, verseString);
   
 }
 
 main.on('click', 'select', function(e) {
   getVerse(PASSAGE_TYPE_DAILY);
+  //getVerse('Gen%2034:30');
 });
 
 main.on('click', 'up', function(e) {
